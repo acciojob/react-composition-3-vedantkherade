@@ -1,18 +1,21 @@
-import React, { useState } from "react";
-
+import React, { useState, cloneElement } from "react";
 
 export default function Tooltip({ text, children }) {
   const [show, setShow] = useState(false);
 
+ 
+  const childWithProps = cloneElement(children, {
+    className: `${children.props.className || ""} tooltip`
+  });
+
   return (
     <div
-      className="tooltip"
       onMouseEnter={() => setShow(true)}
       onMouseLeave={() => setShow(false)}
     >
-      {children}
+      {childWithProps}
 
-      {show && <div className="tooltiptext">{text}</div>}
+      {show && <div>{text}</div>}
     </div>
   );
 }
